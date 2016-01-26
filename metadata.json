@@ -1,0 +1,14 @@
+{
+  "name": "henk52-binrepo",
+  "version": "0.1.0",
+  "author": "henk52",
+  "summary": "Install a simple binrepo using ssh as access.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/henk52/henk52-binrepo",
+  "project_page": "https://github.com/henk52/henk52-binrepo",
+  "issues_url": "https://github.com/henk52/henk52-binrepo/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
