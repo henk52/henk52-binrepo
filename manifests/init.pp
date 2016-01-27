@@ -42,7 +42,9 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class binrepo {
+class binrepo (
+ $arRepoAdmPublicKeys = hiera('repoadmpubkeys')
+){
 
 user { 'repoadm':
   ensure     => present,
@@ -63,6 +65,22 @@ file { '/var/virtualmachines':
 }
 
 # hosts auth keys.
+file { '/home/repoadm/.ssh':
+  ensure  => directory,
+  owner   => 'repoadm',
+  mode    => '700',
+  require => User['repoadm'],
+}
+
+file { '/home/repoadm/.ssh/authorized_keys':
+  ensure  => file,
+  owner   => 'repoadm',
+  mode    => '700',
+  content => inline_template("<% @arRepoAdmPublicKeys.each do |szKey| -%>
+<%= szKey %>
+<% end %>"),
+  require => File['/home/repoadm/.ssh'],
+}
 
 
 } # end class.
