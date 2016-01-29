@@ -103,10 +103,13 @@ exec { 'temporarily_set_selinux_permisive':
   path    => ['/usr/sbin','/usr/bin'],
 }
 
+#$::apache::params::user = 'repoadm'
 # Base class. Turn off the default vhosts; we will be declaring
 # all vhosts below.
 class { 'apache':
   default_vhost => false,
+  manage_user   => false,
+  user          => 'repoadm',
   require       => Exec['temporarily_set_selinux_permisive'],
 }
 
@@ -120,6 +123,7 @@ apache::vhost { 'subdomain.example.com':
   ip_based       => true,
   port           => '80',
   docroot        => '/var/www/subdomain',
+  docroot_owner  => 'repoadm',
   aliases        => $arAliases,
   directoryindex => 'disabled',
   options        => [ '+Indexes' ],
